@@ -45,6 +45,7 @@ class App extends Component {
     if (patternName.test(name) && patternNum.test(number)) {
       this.setState(({ contacts }) => ({
         contacts: [...contacts, { id: uuidv4(), name, number }],
+        name: '', number: ''
       }));
     } else if (!patternName.test(name)) {
       alert(

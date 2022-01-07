@@ -1,35 +1,5 @@
-import styled from "styled-components";
-import { Button } from "../contacts/contacts";
-
-
-const Form = styled.form`
-  max-width: 300px;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  line-height: 12px;
-  margin-bottom: 20px;
-`;
-
-export const InputField = styled.input`
-  width: 200px;
-  height: 25px;
-  font-size: 20px;
-  font-weight: 600;
-  margin-left: 100px;
-  border-radius: 3px;
-`;
-
-const AddButton = styled(Button)`
-  width: 50px;
-  margin: 25px 0px 0px 25px;
-`;
-
-const Fields = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
+// import styled from "styled-components";
+import { AddButton, Form, Fields, InputField } from "../styledComponents/styledComponents";
 
 const Input = (props) => {
   return (

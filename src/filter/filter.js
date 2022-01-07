@@ -1,10 +1,4 @@
-import { InputField } from "../input/input";
-import styled from "styled-components";
-
-
-const InputFieldFilter = styled(InputField)`
-  margin: 0px;
-`;
+import { InputFieldFilter } from "../styledComponents/styledComponents";
 
 const Filter = ({value, onHandleInput}) => {
     return (

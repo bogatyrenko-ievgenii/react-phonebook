@@ -1,5 +1,4 @@
 body {
-  margin: 10px auto;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -16,7 +15,8 @@ code {
 }
 
 #root {
-  max-width: 900px;
+  margin: 25vh auto 0 auto;
+  width: 500px;
   padding: 3px 3px;
   box-shadow: 1px 1px 5px;
   line-height: 2em;
