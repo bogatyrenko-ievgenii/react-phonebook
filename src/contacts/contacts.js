@@ -1,4 +1,4 @@
-import { Card, Button, List } from '../styledComponents/styledComponents';
+import { Card, DelButton, List } from '../styledComponents/styledComponents';
 
 
 const Contacts = ({filter, deleteFn}) => {
@@ -7,7 +7,7 @@ const Contacts = ({filter, deleteFn}) => {
       return (
         <Card key={contact.id}>
           <span>{contact.name} : {contact.number}</span>
-          <Button id={contact.id} onClick={deleteFn}>delete</Button>
+          <DelButton id={contact.id} onClick={deleteFn}>delete</DelButton>
         </Card>
       );
     });

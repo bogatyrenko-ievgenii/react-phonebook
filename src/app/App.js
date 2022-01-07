@@ -27,36 +27,50 @@ class App extends Component {
     });
   };
 
-  getExamineExistance = () => {
-    return this.state.contacts.filter(contact => {
-      return contact.name === this.state.name
+  getExistence = () => {
+    return this.state.contacts.some(contact => {
+      return contact.name === this.state.name;
     })
   }
 
   onHandleAdd = (event) => {
     event.preventDefault();
-    const patternName =
-      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
-    const patternNum =
-      /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
     let { name, number } = this.state;
     if (!name || !number) return alert("Заполните все поля!");
-    if(this.getExamineExistance().length !== 0) return alert("Такой контакт уже существует")
-    if (patternName.test(name) && patternNum.test(number)) {
+    if(this.getExistence()) return alert("Такой контакт уже существует")
+    let validNameBool = this.getMatchName(name);
+    let validNumBool = this.getMatchNum(number);
+    this.handleCreation(validNameBool, validNumBool);
+  };
+
+  getMatchName = (name) => {
+    const patternName = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+    return patternName.test(name);
+  } 
+
+  getMatchNum = (num) => {
+    const patternNum = /(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})/;
+    return patternNum.test(num);
+  }
+
+  handleCreation = (validNameBool, validNumBool) => {
+    let {name, number} = this.state;
+    if (validNameBool && validNumBool) {
       this.setState(({ contacts }) => ({
         contacts: [...contacts, { id: uuidv4(), name, number }],
         name: '', number: ''
       }));
-    } else if (!patternName.test(name)) {
+    } else if (!validNameBool) {
       alert(
         "Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
       );
-    } else if (!patternNum.test(number)) {
+    } else if (!validNumBool) {
       alert(
         "Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
       );
     }
-  };
+  }
+
 
   onFilter = () => {
       const {contacts, filter} = this.state;

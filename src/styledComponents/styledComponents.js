@@ -18,14 +18,14 @@ margin-left: 100px;
 border-radius: 3px;
 `;
 
-export const Button = styled.button`
+export const DelButton = styled.button`
   border-radius: 3px;
   color: #FFF;
   background-color: rgb(10, 151, 85);
   height: 30px;
 `;
 
-export const AddButton = styled(Button)`
+export const AddButton = styled(DelButton)`
 width: 50px;
 margin: 25px 0px 0px 25px;
 `;
@@ -50,9 +50,6 @@ export const Card = styled.li`
   justify-content: space-between;
   align-items: center;
 `;
-
-
-
 
 export const List = styled.ul`
   margin: 0px;
