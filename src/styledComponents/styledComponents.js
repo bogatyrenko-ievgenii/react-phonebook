@@ -62,3 +62,25 @@ export const List = styled.ul`
   margin: 20px;
 
 `;
+
+export const Notification = styled.div`
+  margin: 15vh auto 0 auto;
+  width: 500px;
+  min-height: 250px;
+  padding: 3px 3px;
+  color: #fff;
+  font-size: 20px;
+  background-color: rgba(169, 17, 51, .8);
+  line-height: 2em;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0);
+
+`;
+
+export const FormLayout = styled.div`
+  margin: 15vh auto 0 auto;
+  width: 500px;
+  min-height: 250px;
+  padding: 3px 3px;
+  box-shadow: 1px 1px 5px;
+  line-height: 2em;
+`;

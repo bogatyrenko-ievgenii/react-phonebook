@@ -5,6 +5,8 @@ import Input from "../input/input.js";
 import Contacts from "../contacts/contacts.js";
 import Filter from "../filter/filter.js";
 
+import { FormLayout, Notification } from "../styledComponents/styledComponents.js";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +20,7 @@ class App extends Component {
       name: "",
       number: "",
       filter: "",
+      notification: "",
     };
   }
 
@@ -36,8 +39,16 @@ class App extends Component {
   onHandleAdd = (event) => {
     event.preventDefault();
     let { name, number } = this.state;
-    if (!name || !number) return alert("Заполните все поля!");
-    if(this.getExistence()) return alert("Такой контакт уже существует")
+    if (!name || !number) {
+      return this.setState(({notification}) => ({
+        notification: "Заполните все поля!"
+      }));
+    }
+    if(this.getExistence()) {
+      return this.setState(({notification}) => ({
+        notification: "Такой контакт уже существует"
+      }));
+    }
     let validNameBool = this.getMatchName(name);
     let validNumBool = this.getMatchNum(number);
     this.handleCreation(validNameBool, validNumBool);
@@ -61,13 +72,13 @@ class App extends Component {
         name: '', number: ''
       }));
     } else if (!validNameBool) {
-      alert(
-        "Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-      );
+        return this.setState(({notification}) => ({
+        notification: "Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+      }));
     } else if (!validNumBool) {
-      alert(
-        "Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
-      );
+        return this.setState(({notification}) => ({
+        notification: "Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+      }));
     }
   }
 
@@ -86,9 +97,21 @@ class App extends Component {
     this.setState({contacts: remaining})
   }
 
+  checkForNotifications = () => {
+    if(this.state.notification) {
+      setTimeout(() => {
+        this.setState(({notification}) => ({
+          notification: '',
+        }));
+      }, 3000);
+      return <Notification><h2>{this.state.notification}</h2></Notification>
+    }
+  }
+
   render() {
     return (
-      <>
+      this.checkForNotifications() ||
+      <FormLayout>
         <h1>Phonebook</h1>
         <Input
           value={this.state}
@@ -101,7 +124,8 @@ class App extends Component {
           <span>Kонтактов пока нет</span>
         )}
         <Contacts filter={this.onFilter} deleteFn={this.onDelete}/>
-      </>
+      </FormLayout>
+      
     );
   }
 }
