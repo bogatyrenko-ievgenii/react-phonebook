@@ -24,6 +24,21 @@ class App extends Component {
     };
   }
 
+
+  componentDidMount() {
+    const contactsLocal = localStorage.getItem('contacts');
+    if (contactsLocal) {
+      return this.setState(({contacts}) => ({
+        contacts: JSON.parse(contactsLocal)
+      }));
+      // console.log(JSON.parse(contacts));
+    }
+  }
+
+  // componentWillUnmount() {
+  //   localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  // }
+
   onHandleInput = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -64,13 +79,10 @@ class App extends Component {
     return patternNum.test(num);
   }
 
-  handleCreation = (validNameBool, validNumBool) => {
-    let {name, number} = this.state;
+  handleCreation = async (validNameBool, validNumBool) => {
     if (validNameBool && validNumBool) {
-      this.setState(({ contacts }) => ({
-        contacts: [...contacts, { id: uuidv4(), name, number }],
-        name: '', number: ''
-      }));
+      await this.createNewContact();
+      await this.saveInLocalStorage();
     } else if (!validNameBool) {
         return this.setState(({notification}) => ({
         notification: "Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
@@ -80,6 +92,18 @@ class App extends Component {
         notification: "Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
       }));
     }
+  }
+
+  createNewContact = () => {
+    let {name, number} = this.state;
+    this.setState(({ contacts }) => ({
+      contacts: [...contacts, { id: uuidv4(), name, number }],
+      name: '', number: '',
+    }));
+  }
+
+  saveInLocalStorage = () => {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   }
 
 
@@ -94,7 +118,9 @@ class App extends Component {
     const remaining = contacts.filter(contact => {
       return contact.id !== event.target.id
     })
-    this.setState({contacts: remaining})
+    this.setState(({contacts}) => ({
+      contacts: remaining}))
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   }
 
   checkForNotifications = () => {
